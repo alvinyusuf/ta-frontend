@@ -38,28 +38,16 @@ export default function Home() {
         Dataset Fingerprinting
       </h1>
 
-      <div className="flex flex-col border-2 border-accent p-10 rounded-xl">
+      <div className="flex flex-col shadow-2xl p-8 rounded-xl gap-y-4">
         {menu.map((item, index) => (
-          <Link to={`/${item.title.toLowerCase().replace(/\s+/g, '-')}`} key={index}>
-            <button className="w-full bg-primary text-white p-3 text-2xl rounded-xl hover:bg-accent mb-4">
+          <Link to={item.link} key={index}>
+            <button className="w-full bg-primary text-white p-3 text-xl font-bold rounded-xl hover:bg-accent">
               {item.title}
             </button>
           </Link>
         ))}
         
       </div>
-
-      {/* <div className="flex items-center gap-x-4">
-        <Link to="/generate">
-            <button className="bg-primary text-white p-3 text-2xl rounded-xl hover:bg-accent">
-            Generate Image
-            </button>
-        </Link>
-        <p className="text-secondary font-bold">OR</p>
-        <button className="bg-primary text-white p-3 text-2xl rounded-xl hover:bg-accent">
-          Attribution Image
-        </button>
-      </div> */}
     </div>
   );
 }

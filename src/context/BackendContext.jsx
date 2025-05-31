@@ -23,3 +23,17 @@ export const BackendProvider = ({ children }) => {
 };
 
 export const useBackend = () => useContext(BackendContext);
+
+export const getBackendUrl = () => {
+  const fullUrl = localStorage.getItem("backend_url") || "https://default-backend.com";
+  
+  try {
+    const url = new URL(fullUrl);
+    // Buang path apapun setelah hostname
+    url.pathname = "";
+    return url.toString().replace(/\/$/, ""); // hapus slash akhir jika ada
+  } catch (err) {
+    console.error("Invalid backend URL:", fullUrl, err);
+    return "https://default-backend.com";
+  }
+};
