@@ -5,7 +5,6 @@ import { getAxiosInstance } from "../axiosInstance";
 const fingerprintService = {
     embedFingerprint: async (fingerprintData) => {
         try {
-            // const response = await axiosInstance.post("fingerprint/embed", fingerprintData);
             const response = await getAxiosInstance().post("fingerprinting/embed", fingerprintData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -19,8 +18,11 @@ const fingerprintService = {
     },
     decodeFingerprint: async (fingerprintData) => {
         try {
-            // const response = await axiosInstance.post("fingerprint/decode", fingerprintData);
-            const response = await getAxiosInstance().post("fingerprint/decode", fingerprintData);
+            const response = await getAxiosInstance().post("fingerprinting/decode", fingerprintData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
             return response.data;
         } catch (error) {
             console.error("Error decoding fingerprint:", error);
