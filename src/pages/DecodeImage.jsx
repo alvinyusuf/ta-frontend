@@ -92,7 +92,7 @@ export default function DecodeImage() {
                   value={result.status === "success" && !loading ? result.data.fingerprint : ""}
                 ></textarea>
               </div>
-              <button onClick={handleCopy} className="bg-primary text-white font-bold py-2 px-4 rounded-xl">Copy</button>
+              <button onClick={handleCopy} className="bg-primary text-white font-bold py-2 px-4 rounded-xl hover:bg-accent">Copy</button>
             </div>
           )}
         </div>

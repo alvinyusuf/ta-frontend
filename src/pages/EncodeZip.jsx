@@ -113,7 +113,7 @@ export default function EncodeZip() {
                   <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                 )}
               </div>
-              <button onClick={handleDownload} className="bg-primary text-white font-bold py-2 px-4 rounded-xl">Download Zip</button>
+              <button onClick={handleDownload} className="bg-primary text-white font-bold py-2 px-4 rounded-xl hover:bg-accent">Download Zip</button>
             </div>
           )}
         </div>

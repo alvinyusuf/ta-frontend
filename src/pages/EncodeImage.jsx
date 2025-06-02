@@ -126,7 +126,7 @@ export default function EncodeImage() {
                   value={result.status === "success" && !loading ? result.data.fingerprint : ""}
                 ></textarea>
               </div>
-              <button onClick={handleDownload} className="bg-primary text-white font-bold py-2 px-4 rounded-xl">Download gambar</button>
+              <button onClick={handleDownload} className="bg-primary text-white font-bold py-2 px-4 rounded-xl hover:bg-accent">Download gambar</button>
             </div>
           )}
         </div>
