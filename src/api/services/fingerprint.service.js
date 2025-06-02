@@ -1,5 +1,3 @@
-// import axiosInstance from "../axiosInstance";
-
 import { getAxiosInstance } from "../axiosInstance";
 
 const fingerprintService = {
@@ -29,6 +27,19 @@ const fingerprintService = {
             throw error;
         }
     },
+    embedBatch: async (fingerprintData) => {
+        try {
+            const response = await getAxiosInstance().post("fingerprinting/embed-batch", fingerprintData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error("Error embedding multiple fingerprints:", error);
+            throw error;
+        }
+    }
 }
 
 export default fingerprintService;

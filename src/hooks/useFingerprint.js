@@ -31,10 +31,25 @@ export const useFingerprint = () => {
     }
   };
 
+  const embedBatch = async (data) => {
+    try {
+      setLoading(true);
+      const result = await fingerprintService.embedBatch(data);
+      return result;
+    } catch (err) {
+      setError(err);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return {
     embedFingerprint,
     decodeFingerprint,
+    embedBatch,
     loading,
     error,
   };
+
 };

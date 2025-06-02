@@ -1,65 +1,65 @@
 import { useState } from "react";
-import ImageUpload from "../components/ImageUpload";
 import { useFingerprint } from "../hooks/useFingerprint";
 import { getBackendUrl } from "../context/BackendContext";
+import ZipUpload from "../components/ZipUpload";
 import Header from "../components/Header";
 
-export default function EncodeImage() {
-  const [image, setImage] = useState(null);
+export default function EncodeZip() {
+  const [zip, setZip] = useState(null);
   const [seed, setSeed] = useState(0);
   const [error, setError] = useState("");
   const [result, setResult] = useState({ status: "idle", data: null });
 
   const backendUrl = getBackendUrl();
-  const { embedFingerprint, loading, error: fingerprintError } = useFingerprint();
+  const { embedBatch, loading, error: fingerprintError } = useFingerprint();
 
-  const handleFileSelected = (image) => {
-    setImage(image);
+  const handleFileSelected = (zip) => {
+    setZip(zip);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!image) {
-      setError("Pilih gambar terlebih dahulu!");
+    if (!zip) {
+      setError("Pilih file zip terlebih dahulu!");
       return;
     }
 
     setError("");
-    const response = await embedFingerprint({
-      image: image,
+    const response = await embedBatch({
+      file: zip,
       seed: parseInt(e.target.seed.value, 10) || 0,
     });
     setResult(response);
   };
 
   const handleDownload = async () => {
-    if (result.status !== "success" || !result.data.image_url) {
-      setError("Tidak ada gambar untuk diunduh.");
+    if (result.status !== "success" || !result.data.zip_url) {
+      setError("Tidak ada zip untuk diunduh.");
       return;
     }
 
     try {
-      const response = await fetch(backendUrl + result.data.image_url);
+      const response = await fetch(backendUrl + result.data.zip_url);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
 
       const link = document.createElement("a");
       link.href = url;
-      link.download = result.data.filename || "encoded_image.png";
+      link.download = result.data.zip_url?.split('/').pop() || "encoded_zip.png";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Download gagal:", err);
-      setError("Terjadi kesalahan saat mengunduh gambar.");
+      setError("Terjadi kesalahan saat mengunduh file zip.");
     }
   };
 
 
   return (
-    <div className="bg-background min-h-screen flex flex-col gap-y-4">
+    <div className="bg-background min-h-screen flex flex-col py-gap-y-4">
       <Header />
       <h1 className="text-4xl font-bold text-accent text-center">Encode Gambar</h1>
       {error && (
@@ -73,7 +73,7 @@ export default function EncodeImage() {
         <div className="w-full max-w-md mx-auto space-y-10">
           <p className="text-center font-bold text-xl text-primary">Input</p>
           <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl shadow-2xl p-6">
-            <ImageUpload onFileSelected={handleFileSelected} />
+            <ZipUpload onFileSelected={handleFileSelected} />
             <div className="flex items-center">
               <label htmlFor="seed" className="text-primary font-bold text-xl">Seed</label>
               <input
@@ -88,7 +88,7 @@ export default function EncodeImage() {
               />
             </div>
             <button type="submit" className="w-full bg-primary text-white text-xl font-bold rounded-xl p-4 hover:bg-accent transition-colors">
-              Encode Gambar
+              Encode Zip
             </button>
           </form>
         </div>
@@ -104,29 +104,16 @@ export default function EncodeImage() {
               <div className="w-32 h-32 flex items-center justify-center bg-gray-100 rounded-xl shadow-lg">
                 {(result.status === "success" && !loading) ? (
                   <img
-                    src={backendUrl+result.data.image_url}
+                    src="zip-96.png"
                     alt="result.png"
-                    height={128}
-                    width={128}
-                    className="w-32 h-32 bg-gray-100 rounded-xl shadow-lg"
+                    height={96}
+                    width={96}
                   />
                 ) : (
                   <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
                 )}
               </div>
-              <div className="flex flex-col w-full text-center">
-                <label htmlFor="fingerprint" className="font-bold text-primary">Fingerprint</label>
-                <textarea
-                  id="fingerprint"
-                  name="fingerprint"
-                  className="ml-2 p-2 border-2 border-secondary rounded-xl w-full focus:outline-none focus:border-primary text-accent font-semibold resize-none"
-                  rows={4}
-                  placeholder="Fingerprint akan muncul di sini setelah encoding"
-                  readOnly
-                  value={result.status === "success" && !loading ? result.data.fingerprint : ""}
-                ></textarea>
-              </div>
-              <button onClick={handleDownload} className="bg-primary text-white font-bold py-2 px-4 rounded-xl">Download gambar</button>
+              <button onClick={handleDownload} className="bg-primary text-white font-bold py-2 px-4 rounded-xl">Download Zip</button>
             </div>
           )}
         </div>

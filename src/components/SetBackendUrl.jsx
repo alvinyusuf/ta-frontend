@@ -13,12 +13,12 @@ export default function SetBackendUrl() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col items-center justify-center bg-background p-6 rounded-xl shadow-2xl w-full max-w-md"
+      className="flex flex-col items-center justify-center w-full max-w-md"
     >
       <p className="text-2xl font-bold text-primary mb-4">Masukkan URL Backend</p>
       <input
         type="text"
-        placeholder="https://example.com/api"
+        placeholder="https://example.com/api/"
         className="w-full p-2 border-2 border-secondary rounded-2xl focus:outline-none focus:border-primary text-accent font-semibold"
         value={input}
         onChange={(e) => setInput(e.target.value)}

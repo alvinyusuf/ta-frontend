@@ -1,18 +1,7 @@
 import { Link } from "react-router";
-import { useBackend } from "../context/BackendContext";
-import SetBackendUrl from "../components/SetBackendUrl";
+import Header from "../components/Header";
 
 export default function Home() {
-  const { backendUrl } = useBackend();
-
-  if (!backendUrl) {
-    return (
-      <div className="bg-background min-h-screen flex flex-col gap-4 items-center justify-center">
-        <SetBackendUrl />
-      </div>
-    );
-  }
-
   const menu = [
     {
       title: "Encode Gambar",
@@ -28,12 +17,13 @@ export default function Home() {
     },
     {
       title: "Coba Use Case Attribusi",
-      link: "/attribution"
+      link: "/attribute"
     }
   ]
 
   return (
-    <div className="bg-background min-h-screen flex flex-col items-center justify-around py-20">
+    <div className="bg-background min-h-screen flex flex-col items-center">
+      <Header />
       <h1 className="text-4xl font-bold text-accent">
         Dataset Fingerprinting
       </h1>

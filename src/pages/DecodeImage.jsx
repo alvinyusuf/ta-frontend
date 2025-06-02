@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ImageUpload from '../components/ImageUpload'
 import { useFingerprint } from '../hooks/useFingerprint';
 import Swal from 'sweetalert2';
+import Header from '../components/Header';
 
 export default function DecodeImage() {
   const [image, setImage] = useState(null);
@@ -50,7 +51,8 @@ export default function DecodeImage() {
   };
 
   return (
-    <div className="bg-background min-h-screen flex flex-col py-10 gap-y-10">
+    <div className="bg-background min-h-screen flex flex-col gap-y-4">
+      <Header />
       <h1 className="text-4xl font-bold text-accent text-center">Decode Gambar</h1>
        {error && (
         <p className="text-center text-red-600 font-semibold bg-red-100 border border-red-300 rounded-lg px-4 py-2 mx-auto max-w-lg">
