@@ -16,8 +16,8 @@ export default function Home() {
       link: "/decode-image"
     },
     {
-      title: "Coba Use Case Attribusi",
-      link: "/attribute"
+      title: "Generate Gambar",
+      link: "/generate"
     }
   ]
 

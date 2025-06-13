@@ -57,7 +57,6 @@ export default function EncodeImage() {
     }
   };
 
-
   return (
     <div className="bg-background min-h-screen flex flex-col gap-y-4">
       <Header />
@@ -130,7 +129,6 @@ export default function EncodeImage() {
             </div>
           )}
         </div>
-
 
       </div>
     </div>
