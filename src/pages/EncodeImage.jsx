@@ -103,7 +103,7 @@ export default function EncodeImage() {
               <div className="w-32 h-32 flex items-center justify-center bg-gray-100 rounded-xl shadow-lg">
                 {(result.status === "success" && !loading) ? (
                   <img
-                    src={backendUrl+result.data.image_url}
+                    src={backendUrl + result.data.image_url}
                     alt="result.png"
                     height={128}
                     width={128}
