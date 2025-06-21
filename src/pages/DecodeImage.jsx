@@ -7,7 +7,11 @@ import Header from '../components/Header';
 export default function DecodeImage() {
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
-  const [result, setResult] = useState({ status: "idle", data: null });
+  const [fingerprint_str, setFingerprint_srt] = useState("");
+  const [result, setResult] = useState({ status: "idle", data: {
+    fingerprint: "",
+    bitwise_accuracy: 0
+  } });
   const { decodeFingerprint, loading, error: decodeError } = useFingerprint();
 
   const handleFileSelected = (image) => {
@@ -24,9 +28,11 @@ export default function DecodeImage() {
 
     setError("");
     const response = await decodeFingerprint({
-      image: image
+      image: image,
+      input_fingerprint: fingerprint_str,
     });
     setResult(response);
+    console.log(response);
   };
 
   const handleCopy = async () => {
@@ -51,7 +57,7 @@ export default function DecodeImage() {
   };
 
   return (
-    <div className="bg-background min-h-screen flex flex-col gap-y-4">
+    <div className="bg-background min-h-screen flex flex-col">
       <Header />
       <h1 className="text-4xl font-bold text-accent text-center">Decode Gambar</h1>
        {error && (
@@ -62,12 +68,24 @@ export default function DecodeImage() {
 
       <div className="flex items-center gap-x-4">
         
-        <div className="w-full max-w-md mx-auto space-y-10">
+        <div className="w-full max-w-md mx-auto">
           <p className="text-center font-bold text-xl text-primary">Input</p>
           <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl shadow-2xl p-6">
             <ImageUpload onFileSelected={handleFileSelected} />
+            <div className="flex flex-col">
+              <label htmlFor="fingerprint" className="font-bold text-primary w-1/2 text-start flex items-center">fingerprint (ground truth)</label>
+              <textarea
+                id="fingerprint"
+                name="fingerprint_str"
+                className="p-2 border-2 border-secondary rounded-xl w-full focus:outline-none focus:border-primary text-accent font-semibold resize-none"
+                rows={4}
+                placeholder="Masukkan fingerprint (ground truth)"
+                onChange={(e) => setFingerprint_srt(e.target.value)}
+                required
+              ></textarea>
+            </div>
             <button type="submit" className="w-full bg-primary text-white text-xl font-bold rounded-xl p-4 hover:bg-accent transition-colors">
-              Encode Gambar
+              Decode Gambar
             </button>
           </form>
         </div>
@@ -79,8 +97,17 @@ export default function DecodeImage() {
               {decodeError.message}
             </p>
           ) : (
-            <div className="flex flex-col items-center rounded-2xl shadow-2xl p-6 gap-y-6">
-              <div className="flex flex-col w-full text-center">
+            <div className="flex flex-col items-center rounded-2xl shadow-2xl p-6 gap-y-2">
+              <div className="flex w-full text-center">
+                <label htmlFor="fingerprint" className="font-bold text-primary w-1/2 text-start flex items-center">Bitwise Accuracy</label>
+                <input
+                  type="text"
+                  className="ml-2 p-2 border-2 border-secondary rounded-xl w-full focus:outline-none focus:border-primary text-accent font-semibold resize-none"
+                  readOnly
+                  value={result.data.bitwise_accuracy}
+                />
+              </div>
+              <div className="flex flex-col w-full text-center mb-4">
                 <label htmlFor="fingerprint" className="font-bold text-primary">Fingerprint</label>
                 <textarea
                   id="fingerprint"
@@ -96,7 +123,6 @@ export default function DecodeImage() {
             </div>
           )}
         </div>
-
 
       </div>
     </div>
